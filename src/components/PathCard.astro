@@ -1,0 +1,23 @@
+---
+import type { LearningPath } from "../data/learning";
+import StatusBadge from "./StatusBadge.astro";
+
+interface Props { path: LearningPath; compact?: boolean }
+const { path, compact = false } = Astro.props;
+const searchText = `${path.title} ${path.category} ${path.level} ${path.skills.join(" ")} ${path.description}`.toLowerCase();
+---
+
+<article class:list={["path-card", `accent-${path.accent}`, { "path-card-compact": compact }]} data-filter-card data-search={searchText} data-level={path.level} data-status={path.status}>
+  <div class="path-card-top"><span class="path-icon" aria-hidden="true">{path.category === "Web development" ? "01" : path.category === "Python & data" ? "02" : "03"}</span><StatusBadge status={path.status} /></div>
+  <p class="eyebrow">{path.category} <span>·</span> {path.level}</p>
+  <h3><a href={`/paths/${path.slug}/`}>{path.title}</a></h3>
+  <p class="path-description">{path.description}</p>
+  <div class="skill-tags">{path.skills.slice(0, compact ? 3 : 4).map((skill) => <span>{skill}</span>)}</div>
+  <div class="path-card-meta"><span>{path.duration}</span><span>1 project</span></div>
+  <div data-path-progress data-path-slug={path.slug} data-lesson-slugs={path.lessonSlugs.join(",")} hidden></div>
+  <a href={`/paths/${path.slug}/`} class="text-link">{path.status === "complete" ? "View learning path" : "Explore preview"}</a>
+</article>
+
+<script>
+  import "../scripts/progress-ui.ts";
+</script>

@@ -1,0 +1,33 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { lessons, paths, projects } from "../../data/learning";
+
+const dashboardModel = JSON.stringify({
+  paths: paths.map(({ slug, title, lessonSlugs, projectSlug }) => ({ slug, title, lessonSlugs, projectSlug })),
+  lessons: lessons.map(({ slug, title, duration }) => ({ slug, title, duration })),
+  projects: projects.map(({ slug, title }) => ({ slug, title })),
+}).replaceAll("<", "\\u003c");
+---
+
+<SiteLayout title="My learning · DishaStack" description="See your locally saved learning progress, bookmarked lessons, and completed projects.">
+  <section class="dashboard-hero"><div class="shell dashboard-hero-inner"><div><span class="eyebrow">Your learning space</span><h1>Keep your momentum.</h1><p>Pick up where you left off, revisit a saved lesson, or choose a new path.</p></div><span class="demo-note">Saved only in this browser</span></div></section>
+  <section class="section"><div class="shell" data-dashboard>
+    <div class="dashboard-grid">
+      <article class="dashboard-card resume-card">
+        <div><span class="eyebrow" data-current-label>Ready when you are</span><h2 data-current-title>Choose your first path.</h2><p data-current-description>Start with a small goal and build your knowledge one lesson at a time.</p>
+          <div class="progress-wrap" data-current-progress hidden><div class="progress-meta"><span data-current-count>0 lessons</span><span data-current-percent>0%</span></div><div class="progress-track" data-current-track role="progressbar" aria-label="Path progress" aria-valuemin="0" aria-valuemax="100"><span data-current-fill></span></div></div>
+        </div>
+        <a href="/paths/" data-current-link class="button button-lime">Explore paths</a>
+      </article>
+      <article class="dashboard-card"><h2>Your progress</h2><div class="dashboard-stat-row"><div class="dashboard-stat"><strong data-count-lessons>0</strong><span>Lessons completed</span></div><div class="dashboard-stat"><strong data-count-challenges>0</strong><span>Challenges solved</span></div><div class="dashboard-stat"><strong data-count-projects>0</strong><span>Projects finished</span></div></div><p class="dashboard-small-note">No streak pressure. Your progress reflects what you chose to learn.</p></article>
+      <article class="dashboard-card"><h2>Saved lessons</h2><div class="saved-list" data-saved-list><div class="dashboard-empty"><strong>Nothing saved yet.</strong><p>Bookmark a lesson and it will appear here.</p><a href="/paths/" class="text-link">Find a lesson</a></div></div></article>
+      <article class="dashboard-card"><h2>Recently completed</h2><div class="saved-list" data-completed-list><div class="dashboard-empty"><strong>Your first checkpoint is waiting.</strong><p>Complete a lesson to see it here.</p><a href="/paths/" class="text-link">Choose a path</a></div></div></article>
+      <article class="dashboard-card"><h2>Projects</h2><div class="saved-list" data-project-list><div class="dashboard-empty"><strong>Build when you’re ready.</strong><p>Projects turn several small skills into something you can show.</p><a href="/projects/" class="text-link">Browse project briefs</a></div></div></article>
+      <article class="dashboard-card dashboard-next"><span class="topic-symbol" aria-hidden="true">✦</span><h2>Make today count in 10 minutes.</h2><p>Try a quick JavaScript exercise, then choose what you want to build next.</p><a href="/practice/" class="button button-outline button-small">Open today’s challenge</a></article>
+    </div>
+    <button class="reset-progress" type="button" data-reset-progress>Reset this browser’s progress</button>
+    <p class="dashboard-small-note">Progress is stored in local browser storage. It does not sync between devices.</p>
+  </div></section>
+  <script type="application/json" data-dashboard-model set:html={dashboardModel}></script>
+  <script>import "../../scripts/dashboard.ts";</script>
+</SiteLayout>

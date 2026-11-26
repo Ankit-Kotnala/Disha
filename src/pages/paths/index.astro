@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import PathCard from "../../components/PathCard.astro";
+import { paths } from "../../data/learning";
+---
+
+<SiteLayout title="Learning paths · DishaStack" description="Choose a guided technology learning path and build a project as you learn.">
+  <section class="page-hero"><div class="shell"><span class="eyebrow">A route, not a pile of links</span><h1>Choose your next skill.</h1><p>Follow a focused sequence from a clear starting point to practice and a project. Each path tells you what’s ready today.</p></div></section>
+  <section class="section"><div class="shell" data-filter-page>
+    <div class="topic-toolbar">
+      <label class="search-field"><span aria-hidden="true">⌕</span><input type="search" data-filter-search placeholder="Search paths or skills" aria-label="Search learning paths" /></label>
+      <select class="filter-select" data-filter-level aria-label="Filter by level"><option value="all">All levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+      <select class="filter-select" data-filter-status aria-label="Filter by content status"><option value="all">All content</option><option value="complete">Complete paths</option><option value="preview">Previews</option></select>
+      <span class="result-count" data-filter-count>{paths.length} results</span>
+    </div>
+    <div class="path-grid">{paths.map((path) => <PathCard path={path} />)}</div>
+    <div class="empty-results" data-filter-empty hidden><h3>No paths found</h3><p>Try a broader search or clear the filters.</p><button type="button" class="button button-outline button-small" data-filter-clear>Clear filters</button></div>
+    <div class="detail-note" style="margin-top:30px"><strong>Content grows carefully.</strong> A preview has sample material; it is not presented as a complete course.</div>
+  </div></section>
+  <script>import "../../scripts/filters.ts";</script>
+</SiteLayout>

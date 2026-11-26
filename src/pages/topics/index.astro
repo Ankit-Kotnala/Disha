@@ -1,0 +1,22 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import TopicCard from "../../components/TopicCard.astro";
+import { topics } from "../../data/learning";
+const categories = [...new Set(topics.map((topic) => topic.category))];
+---
+
+<SiteLayout title="Technology library · DishaStack" description="Browse technology topics and see which paths are ready, in preview, or curated from other sources.">
+  <section class="page-hero"><div class="shell"><span class="eyebrow">A library that grows with you</span><h1>Explore the technology landscape.</h1><p>Find a starting point across web development, data, AI, infrastructure, and the fundamentals behind it all. The status label tells you what is ready.</p></div></section>
+  <section class="section"><div class="shell" data-filter-page>
+    <div class="topic-toolbar">
+      <label class="search-field"><span aria-hidden="true">⌕</span><input type="search" data-filter-search placeholder="Search a technology or skill" aria-label="Search topics" /></label>
+      <select class="filter-select" data-filter-category aria-label="Filter by area"><option value="all">All areas</option>{categories.map((category) => <option value={category}>{category}</option>)}</select>
+      <select class="filter-select" data-filter-status aria-label="Filter by content availability"><option value="all">All content</option><option value="learning">Learning here</option><option value="resources">Resources & coming soon</option></select>
+      <span class="result-count" data-filter-count>{topics.length} results</span>
+    </div>
+    <div class="topic-grid">{topics.map((topic) => <TopicCard topic={topic} />)}</div>
+    <div class="empty-results" data-filter-empty hidden><h3>No topics found</h3><p>Clear a filter or try a broader search.</p><button class="button button-outline button-small" type="button" data-filter-clear>Clear filters</button></div>
+    <div class="detail-note" style="margin-top:30px"><strong>How to read the labels:</strong> Complete path means lessons and a project are available. Preview means you can sample the direction. Curated resources link to outside learning material. Coming soon means we have not published the content yet.</div>
+  </div></section>
+  <script>import "../../scripts/filters.ts";</script>
+</SiteLayout>

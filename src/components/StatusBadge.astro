@@ -1,0 +1,9 @@
+---
+import { statusLabels, type ContentStatus } from "../data/learning";
+
+interface Props { status: ContentStatus }
+const { status } = Astro.props;
+const statusClass = status === "complete" ? "status-complete" : status === "preview" ? "status-preview" : status === "curated" ? "status-curated" : "status-soon";
+---
+
+<span class:list={["status-badge", statusClass]}><span class="status-bullet"></span>{statusLabels[status]}</span>

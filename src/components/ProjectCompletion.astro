@@ -1,0 +1,33 @@
+---
+import type { projects } from "../data/learning";
+type Project = (typeof projects)[number];
+interface Props { project: Project }
+const { project } = Astro.props;
+---
+
+<div class="project-detail" data-project data-project-slug={project.slug} data-project-status={project.status} data-requirement-count={project.requirements.length}>
+  <div class="project-brief">
+    <span class="eyebrow">Project brief <span>·</span> {project.level} <span>·</span> {project.time}</span>
+    <h2>What you’re making</h2><p>{project.description}</p>
+    <h2 style="margin-top:25px">Completion checklist</h2>
+    <ul class="checklist">
+      {project.requirements.map((requirement) => <li data-requirement-row class:list={[{ "is-preview": project.status !== "complete" }]}>
+        {project.status === "complete"
+          ? <button type="button" aria-pressed="false" data-project-requirement={requirement} class="checklist-check" aria-label={`Mark ${requirement} complete`}><span aria-hidden="true"></span></button>
+          : <span class="checklist-check is-static" aria-hidden="true">✓</span>}
+        {requirement}
+      </li>)}
+    </ul>
+    {project.status === "complete" && <div style="margin-top:20px"><button class="button button-dark" type="button" data-complete-project disabled>Mark project complete</button><p class="form-hint" data-project-hint>Tick each checklist item to mark your project complete.</p></div>}
+    {project.status !== "complete" && <div class="detail-note" style="margin-top:20px"><strong>This project is a preview.</strong> Its complete build instructions are still being prepared. Explore the introductory lesson while we finish the project path.</div>}
+  </div>
+  <aside>
+    <div class="panel"><h3>Skills you’ll practise</h3><div class="skill-list">{project.skills.map((skill) => <span>{skill}</span>)}</div></div>
+    <div class="panel"><h3>Reflect on your work</h3><p>Use these questions to describe the choices you made.</p><div class="reflection-list">{project.reflection.map((question, index) => <label>{question}<textarea data-reflection-index={index} placeholder="Write a note for yourself"></textarea></label>)}</div></div>
+    <div class="panel"><h3>Keep your work yours</h3><p>The brief is free to use. Your project files stay on your device unless you choose to publish them.</p><a href="/paths/" class="text-link">Find another path</a></div>
+  </aside>
+</div>
+
+<script>
+  import "../scripts/project.ts";
+</script>

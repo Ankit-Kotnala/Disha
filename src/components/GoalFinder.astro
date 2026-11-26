@@ -1,0 +1,31 @@
+---
+import { paths } from "../data/learning";
+const goalPaths = [
+  { goal: "web", slug: "build-your-first-web-app" },
+  { goal: "data", slug: "python-and-data-foundations" },
+  { goal: "ai", slug: "ai-foundations-and-applications" },
+].map((item) => ({ ...item, path: paths.find((path) => path.slug === item.slug)! }));
+---
+
+<section class="goal-finder-band" data-goal-finder>
+  <div class="shell goal-finder">
+    <div class="goal-finder-intro"><span class="goal-compass" aria-hidden="true">◎</span><div><span class="eyebrow">Optional · about 20 seconds</span><h2>Not sure where to start?</h2><p>Tell us what you want to make. We’ll point you to a first path. Skip any time.</p></div></div>
+    <form class="goal-finder-form" data-goal-form>
+      <label>What sounds interesting?<select name="goal" required><option value="" selected disabled>Choose a goal</option><option value="web">Build a website or app</option><option value="data">Understand and use data</option><option value="ai">Explore AI and build with it</option></select></label>
+      <label>Your experience<select name="level"><option>New to tech</option><option>Some experience</option><option>Working in tech</option></select></label>
+      <label>Time you can spend<select name="time"><option>Under 2 hours a week</option><option selected>2–3 hours a week</option><option>4+ hours a week</option></select></label>
+      <button class="button button-dark" type="submit">Find a path</button>
+    </form>
+    <div hidden aria-hidden="true">{goalPaths.map(({ goal, path }) => <span data-goal-option={goal} data-slug={path.slug} data-title={path.title} data-description={path.description}></span>)}</div>
+    <div class="goal-recommendation" data-goal-result role="status" hidden>
+      <div><span class="eyebrow" data-goal-context></span><strong data-goal-title></strong><p data-goal-description></p></div>
+      <a class="button button-lime" data-goal-link href="/paths/">View path</a>
+    </div>
+    <button class="goal-skip" type="button" data-goal-skip>Skip for now</button>
+  </div>
+</section>
+<section class="goal-finder-reopen" data-goal-reopen hidden><div class="shell"><span>Still choosing a direction?</span><button type="button" data-goal-show>Show the path finder</button></div></section>
+
+<script>
+  import "../scripts/goal-finder.ts";
+</script>

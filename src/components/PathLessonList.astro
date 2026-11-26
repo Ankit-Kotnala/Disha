@@ -1,0 +1,17 @@
+---
+import type { LearningPath, Lesson } from "../data/learning";
+interface Props { lessons: Lesson[]; path: LearningPath }
+const { lessons, path } = Astro.props;
+---
+
+<div class="lesson-list" data-lesson-list data-path-slug={path.slug}>
+  {lessons.map((lesson, index) => <div class="lesson-list-item" data-lesson-row={lesson.slug}>
+    <span class="lesson-number">{String(index + 1).padStart(2, "0")}</span>
+    <span><h3><a href={`/learn/${lesson.slug}/`}>{lesson.title}</a></h3><p>{lesson.duration} · {lesson.summary}</p></span>
+    <span class="lesson-status" data-lesson-status={lesson.slug}>Ready</span>
+  </div>)}
+</div>
+
+<script>
+  import "../scripts/progress-ui.ts";
+</script>

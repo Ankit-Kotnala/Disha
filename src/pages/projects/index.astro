@@ -1,0 +1,20 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import StatusBadge from "../../components/StatusBadge.astro";
+import { projects, getPath } from "../../data/learning";
+---
+
+<SiteLayout title="Projects · DishaStack" description="Build small portfolio projects that connect your technology skills.">
+  <section class="page-hero"><div class="shell"><span class="eyebrow">Learning you can point to</span><h1>Build a portfolio as you learn.</h1><p>Projects help you connect concepts and show your progress. Start with a brief, meet the checklist, then explain the choices you made.</p></div></section>
+  <section class="section"><div class="shell">
+    <div class="section-heading"><div><span class="eyebrow">Project library</span><h2>Small builds with a real outcome.</h2></div><span class="result-count">{projects.length} project briefs</span></div>
+    <div class="project-grid">{projects.map((project, index) => <article class="project-card">
+      <div class="project-card-top"><span class="project-symbol" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><StatusBadge status={project.status} /></div>
+      <span class="eyebrow">{project.level} <span>·</span> {getPath(project.pathSlug)?.category}</span>
+      <h2><a href={`/projects/${project.slug}/`}>{project.title}</a></h2><p>{project.description}</p>
+      <div class="skill-tags">{project.skills.map((skill) => <span>{skill}</span>)}</div>
+      <div class="path-card-meta"><span>{project.time}</span><span>{project.requirements.length} criteria</span></div>
+      <a href={`/projects/${project.slug}/`} class="text-link" style="margin-top:17px">{project.status === "complete" ? "Open project brief" : "View preview"}</a>
+    </article>)}</div>
+  </div></section>
+</SiteLayout>

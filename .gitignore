@@ -1,0 +1,8 @@
+node_modules/
+.astro/
+dist/
+*.tsbuildinfo
+.DS_Store
+.env*
+.sites-runtime/
+.wrangler/

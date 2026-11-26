@@ -1,0 +1,44 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import StatusBadge from "../../components/StatusBadge.astro";
+import PathActions from "../../components/PathActions.astro";
+import PathLessonList from "../../components/PathLessonList.astro";
+import { getProject, lessons, paths, statusLabels, type LearningPath } from "../../data/learning";
+
+export function getStaticPaths() {
+  return paths.map((path) => ({ params: { slug: path.slug }, props: { path } }));
+}
+
+const { path } = Astro.props as { path: LearningPath };
+const project = getProject(path.projectSlug);
+const pathLessons = path.lessonSlugs.map((slug) => lessons.find((lesson) => lesson.slug === slug)).filter((lesson) => lesson !== undefined);
+---
+
+<SiteLayout title={`${path.title} · DishaStack`} description={path.description}>
+  <section class="path-detail-hero"><div class="shell">
+    <Breadcrumbs items={[{ label: "Learning paths", href: "/paths/" }, { label: path.title }]} />
+    <StatusBadge status={path.status} />
+    <span class="eyebrow path-eyebrow">{path.eyebrow}</span>
+    <h1>{path.title}</h1><p>{path.description}</p>
+    <div class="path-detail-meta"><span>{path.level}</span><span>{path.duration}</span><span>Project: {project?.title}</span></div>
+    <PathActions path={path} />
+  </div></section>
+  <section class="section"><div class="shell content-layout">
+    <div class="content-main">
+      {path.status === "preview" && <p class="detail-note"><strong>This is a preview.</strong> The first lesson is ready to try. The complete sequence and project are still being written, so this page does not claim to be a full course.</p>}
+      <h2 class="section-subhead">Your learning sequence</h2>
+      <PathLessonList lessons={pathLessons} path={path} />
+      <h2 class="section-subhead">What you’ll be able to do</h2>
+      <ul class="outcome-list">{path.outcomes.map((outcome) => <li><span class="check-mark" aria-hidden="true">✓</span>{outcome}</li>)}</ul>
+      <h2 class="section-subhead">Project at the end</h2>
+      {project && <div class="project-preview"><span class="eyebrow">{project.level} <span>·</span> {project.time}</span><h3>{project.title}</h3><p>{project.description}</p><div class="skill-list">{project.skills.map((skill) => <span>{skill}</span>)}</div><div style="margin-top:17px"><a href={`/projects/${project.slug}/`} class="text-link">Open project brief</a></div></div>}
+    </div>
+    <aside class="content-sidebar">
+      <div class="panel"><h3>Skills in this path</h3><div class="skill-list">{path.skills.map((skill) => <span>{skill}</span>)}</div></div>
+      <div class="panel"><h3>What you need first</h3><p>{path.prerequisite}</p></div>
+      <div class="panel"><h3>Built to be free</h3><p>Start without an account. Lessons, activities, and project briefs are open. Your progress is stored locally in this browser.</p><a href="/about/" class="text-link">See the free promise</a></div>
+      <p class="status-explainer-note">Status: {statusLabels[path.status]}</p>
+    </aside>
+  </div></section>
+</SiteLayout>

@@ -1,0 +1,17 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import LessonExperience from "../../components/LessonExperience.astro";
+import { getPath, lessons, type Lesson } from "../../data/learning";
+
+export function getStaticPaths() {
+  return lessons.map((lesson) => ({ params: { slug: lesson.slug }, props: { lesson } }));
+}
+
+const { lesson } = Astro.props as { lesson: Lesson };
+const path = getPath(lesson.pathSlug);
+if (!path) throw new Error(`No learning path found for ${lesson.slug}`);
+---
+
+<SiteLayout title={`${lesson.title} · DishaStack`} description={lesson.summary}>
+  <LessonExperience lesson={lesson} path={path} />
+</SiteLayout>

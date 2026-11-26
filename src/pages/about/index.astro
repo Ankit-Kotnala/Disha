@@ -1,0 +1,27 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+const promises = [
+  { title: "No charge for the core", body: "Lessons, exercises, project briefs, and progress tools are free to use. You don’t need a credit card or paid subscription to start." },
+  { title: "No paid tools required", body: "The sample path can be completed with a browser and freely available tools. We’ll identify any outside resource that needs an account or has its own limits." },
+  { title: "No account required", body: "Browse and learn without signing up. Your progress is saved only in this browser in the current demo." },
+  { title: "Clear about what’s ready", body: "Each topic is marked as a complete path, preview, curated resource, or coming soon. We’ll say plainly when a path is still being built." },
+];
+---
+
+<SiteLayout title="Our free promise · DishaStack" description="How DishaStack keeps its core learning material free and labels content honestly.">
+  <section class="page-hero"><div class="shell"><span class="eyebrow">The DishaStack promise</span><h1>Learning should be open to everyone.</h1><p>We want the cost of getting started in technology to be zero. That means clear lessons, meaningful practice, and projects you can build without a subscription.</p></div></section>
+  <section class="section"><div class="shell">
+    <div class="section-heading"><div><span class="eyebrow">What free means here</span><h2>Start learning. No payment gate.</h2><p>The product is an early version, so we make both our free-access commitment and the limits of the demo visible.</p></div></div>
+    <div class="about-grid">{promises.map(({ title, body }, index) => <article class="promise-card"><span class="promise-icon" aria-hidden="true">0{index + 1}</span><h2>{title}</h2><p>{body}</p></article>)}</div>
+  </div></section>
+  <section class="section section-white"><div class="shell">
+    <div class="section-heading"><div><span class="eyebrow">Honest content labels</span><h2>Know what you’re opening.</h2><p>Some subjects have a complete starter path. Others are a taste of the direction, a link to a useful source, or a note about what’s planned.</p></div></div>
+    <div class="status-explainer">
+      <div class="panel"><span class="status-badge status-complete"><span class="status-bullet"></span>Complete path</span><p>Lessons, exercises, and a project brief are available for this path.</p></div>
+      <div class="panel"><span class="status-badge status-preview"><span class="status-bullet"></span>Preview</span><p>Sample lessons or an outline are ready. The full path is still being written.</p></div>
+      <div class="panel"><span class="status-badge status-curated"><span class="status-bullet"></span>Curated resources</span><p>We point you to outside learning resources. Their access terms and limits apply.</p></div>
+      <div class="panel"><span class="status-badge status-soon"><span class="status-bullet"></span>Coming soon</span><p>The topic is part of the roadmap, but the lesson content is not available yet.</p></div>
+    </div>
+  </div></section>
+  <section class="section"><div class="shell"><div class="library-cta"><div><span class="eyebrow">Learn by making</span><h2>Choose a direction and start now.</h2><p>Begin with a web project, explore the technology map, or try one short challenge.</p></div><a href="/paths/" class="button button-dark">Explore learning paths</a></div><p class="about-footnote">New curriculum will be added in small, reviewed pieces. Our goal is useful depth before a long list of empty course pages.</p></div></section>
+</SiteLayout>

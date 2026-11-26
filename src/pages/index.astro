@@ -1,0 +1,60 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import GoalFinder from "../components/GoalFinder.astro";
+import PathCard from "../components/PathCard.astro";
+import TopicCard from "../components/TopicCard.astro";
+import { paths, topics } from "../data/learning";
+---
+
+<SiteLayout>
+  <section class="hero">
+    <div class="shell hero-inner">
+      <div class="hero-copy">
+        <span class="hero-kicker"><span aria-hidden="true">✦</span> A free place to grow your tech skills</span>
+        <h1>Learn the skill.<br />Build the <em>thing.</em></h1>
+        <p class="hero-description">Clear lessons, hands-on practice, and projects that turn what you learn into work you can show. Start wherever you are. Keep every core step free.</p>
+        <div class="hero-actions"><a href="/paths/" class="button button-lime">Find your learning path</a><a href="/practice/" class="button button-outline">Try a quick challenge</a></div>
+        <div class="hero-proof"><span>No payment or account needed</span><span>Progress stays on your device</span></div>
+      </div>
+      <div class="hero-visual" aria-label="A sample learning path from foundations through practice to a project">
+        <div class="hero-orbit"></div>
+        <div class="learning-map">
+          <div class="map-head"><span class="map-head-label">Your first web app</span><span class="map-level">BEGINNER PATH</span></div>
+          <div class="map-path">
+            <div class="map-step"><span class="map-node done">✓</span><span><span class="map-step-title">Learn the foundations</span><br /><span class="map-step-sub">The browser, HTML, and page structure</span></span><span class="map-step-time">01</span></div>
+            <div class="map-step"><span class="map-node next">02</span><span><span class="map-step-title">Try it in small steps</span><br /><span class="map-step-sub">Layout, interaction, and feedback</span></span><span class="map-step-time">PRACTICE</span></div>
+            <div class="map-step"><span class="map-node">03</span><span><span class="map-step-title">Build something real</span><br /><span class="map-step-sub">A responsive homepage of your own</span></span><span class="map-step-time">PROJECT</span></div>
+          </div>
+          <div class="map-project"><strong>One project you can keep</strong><p>Plan it · Make it · Share what you learned</p></div>
+          <div class="map-sticker"><strong>100%</strong><span>free to<br />get started</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <GoalFinder />
+
+  <div class="trust-strip"><div class="shell trust-inner"><span class="trust-intro">Made for the first step and the next one.</span><span class="trust-item">Learn without an account</span><span class="trust-item">Practise without paid tools</span><span class="trust-item">Build at your own pace</span><span class="trust-item">Keep your work yours</span></div></div>
+
+  <section class="section"><div class="shell">
+    <div class="section-heading"><div><span class="eyebrow">Start with a direction</span><h2>Pick a path. Make it your own.</h2><p>Choose a goal that sounds like you. Each path shows what you’ll learn, what you’ll build, and how much is ready today.</p></div><a href="/paths/" class="text-link">Browse all paths</a></div>
+    <div class="path-grid">{paths.map((path) => <PathCard path={path} />)}</div>
+  </div></section>
+
+  <section class="section-tight section-white"><div class="shell"><div class="outcome-banner">
+    <div class="outcome-copy"><span class="eyebrow">Learning that moves</span><h2>Not just notes.<br />A thing you made.</h2><p>Understand a concept, try it in a small exercise, then use it in a project. The project becomes your proof of progress.</p></div>
+    <div class="outcome-steps"><div class="outcome-step"><span>01 / UNDERSTAND</span><strong>Get the idea in plain language</strong></div><div class="outcome-step"><span>02 / PRACTISE</span><strong>Try a small challenge</strong></div><div class="outcome-step"><span>03 / BUILD</span><strong>Make a project of your own</strong></div><div class="outcome-step"><span>04 / SHOW</span><strong>Share what you learned</strong></div></div>
+  </div></div></section>
+
+  <section class="section section-white"><div class="shell">
+    <div class="section-heading"><div><span class="eyebrow">Explore the tech map</span><h2>Curiosity can go in every direction.</h2><p>Browse foundational and new-age topics. We mark what has a full path, what is a preview, and where we’ve curated outside resources.</p></div><a href="/topics/" class="text-link">Explore all topics</a></div>
+    <div class="topic-grid">{topics.slice(0, 8).map((topic) => <TopicCard topic={topic} />)}</div>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-heading"><div><span class="eyebrow">A little progress counts</span><h2>Got 10 minutes? Try today’s challenge.</h2><p>Practise one focused idea, get a nudge if you’re stuck, and see why the answer works.</p></div><a href="/practice/" class="button button-dark button-small">Open the challenge</a></div>
+    <a href="/practice/" class="challenge-card challenge-teaser"><div class="challenge-cover"><span class="challenge-day">TODAY’S SMALL BUILD</span><h2>Make a greeting<br />that remembers your name.</h2></div><div class="challenge-content"><div class="challenge-meta"><span>JavaScript basics</span><span>Beginner</span><span>About 10 minutes</span></div><p>Use a short function to turn a name into a friendly greeting. Get the prompt, optional hints, and a sample answer in the practice area.</p><span class="text-link">Try the challenge</span></div></a>
+  </div></section>
+
+  <section class="section-tight section-white"><div class="shell"><div class="library-cta"><div><span class="eyebrow">Open to everyone</span><h2>Learn free. Build real. Show your skills.</h2><p>No subscription, paywalled core lessons, or credit card. Browse first; your progress is saved on this device if you choose to use it.</p></div><a href="/about/" class="button button-dark">How free access works</a></div></div></section>
+</SiteLayout>

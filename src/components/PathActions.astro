@@ -1,0 +1,20 @@
+---
+import type { LearningPath } from "../data/learning";
+import ProgressBar from "./ProgressBar.astro";
+interface Props { path: LearningPath }
+const { path } = Astro.props;
+const firstLesson = path.lessonSlugs[0];
+---
+
+<div data-path-actions data-path-slug={path.slug} data-project-slug={path.projectSlug} data-lesson-slugs={path.lessonSlugs.join(",")}>
+  <div data-path-progress-view hidden style="max-width:380px;margin-top:17px"><ProgressBar value={0} label={`0 of ${path.lessonSlugs.length} lessons`} /></div>
+  <div class="path-action-row">
+    <a href={`/learn/${firstLesson}/`} data-start-path class="button button-lime">{path.status === "complete" ? "Start this path" : "Try the preview lesson"}</a>
+    <a href={`/projects/${path.projectSlug}/`} class="button button-outline">View the project</a>
+  </div>
+  <p class="path-complete-note" data-path-complete-note hidden>You’ve completed every lesson in this path. Your project is the next step.</p>
+</div>
+
+<script>
+  import "../scripts/progress-ui.ts";
+</script>

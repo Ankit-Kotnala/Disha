@@ -1,0 +1,19 @@
+---
+import type { ContentStatus, Level } from "../data/learning";
+import StatusBadge from "./StatusBadge.astro";
+
+interface Topic { name: string; category: string; level: Level; status: ContentStatus; description: string; resource?: string; pathSlug?: string; lastReviewed?: string }
+interface Props { topic: Topic }
+const { topic } = Astro.props;
+const href = topic.pathSlug ? `/paths/${topic.pathSlug}/` : topic.resource ?? "/topics/";
+const external = !topic.pathSlug && Boolean(topic.resource);
+const searchText = `${topic.name} ${topic.category} ${topic.description}`.toLowerCase();
+---
+
+<article class="topic-card" data-filter-card data-search={searchText} data-category={topic.category} data-status={topic.status}>
+  <div class="topic-card-top"><span class="topic-symbol" aria-hidden="true">✦</span><StatusBadge status={topic.status} /></div>
+  <span class="eyebrow">{topic.category} <span>·</span> {topic.level}</span>
+  <h3>{external ? <a href={href} target="_blank" rel="noreferrer">{topic.name}</a> : <a href={href}>{topic.name}</a>}</h3>
+  <p>{topic.description}</p>
+  {topic.resource && <span class="topic-source">Official resource linked{topic.lastReviewed ? ` · Reviewed ${topic.lastReviewed}` : ""}</span>}
+</article>

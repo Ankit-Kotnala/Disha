@@ -1,0 +1,10 @@
+---
+interface Props { value: number; label?: string }
+const { value, label = "Progress" } = Astro.props;
+const safeValue = Math.max(0, Math.min(100, value));
+---
+
+<div class="progress-wrap">
+  <div class="progress-meta"><span>{label}</span><span>{safeValue}%</span></div>
+  <div class="progress-track" role="progressbar" aria-label={label} aria-valuemin="0" aria-valuemax="100" aria-valuenow={safeValue}><span style={`width:${safeValue}%`}></span></div>
+</div>

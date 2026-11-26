@@ -1,0 +1,19 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import StatusBadge from "../../components/StatusBadge.astro";
+import ProjectCompletion from "../../components/ProjectCompletion.astro";
+import { getPath, projects } from "../../data/learning";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: (typeof projects)[number] };
+const path = getPath(project.pathSlug);
+---
+
+<SiteLayout title={`${project.title} · DishaStack`} description={project.description}>
+  <section class="page-hero"><div class="shell"><Breadcrumbs items={[{ label: "Projects", href: "/projects/" }, { label: project.title }]} /><StatusBadge status={project.status} /><h1>{project.title}</h1><p>{project.description}</p><div class="path-detail-meta"><span>{project.level}</span><span>{project.time}</span></div>{path && <div style="margin-top:17px"><a href={`/paths/${path.slug}/`} class="text-link">Part of {path.title}</a></div>}</div></section>
+  <section class="section"><div class="shell"><ProjectCompletion project={project} /></div></section>
+</SiteLayout>

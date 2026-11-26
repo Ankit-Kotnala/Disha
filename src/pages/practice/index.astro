@@ -1,0 +1,29 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+
+<SiteLayout title="Practice · DishaStack" description="Try a short JavaScript challenge with hints, feedback, and an explanation.">
+  <section class="page-hero"><div class="shell"><span class="eyebrow">One small step</span><h1>Practise until it clicks.</h1><p>Short exercises help you use a concept while it’s fresh. Try the sample challenge, ask for a hint, and check your answer.</p></div></section>
+  <section class="section"><div class="shell challenge-shell">
+    <article class="challenge-card" data-challenge data-challenge-slug="greeting-template">
+      <div class="challenge-cover"><span class="challenge-day">TODAY’S CHALLENGE · JAVASCRIPT</span><h2>Make a greeting<br />that remembers your name.</h2></div>
+      <div class="challenge-content">
+        <div class="challenge-meta"><span>JavaScript strings</span><span>Beginner</span><span>About 10 minutes</span></div>
+        <p>A template literal can place a variable inside a string. In this example, <code>name</code> already holds the learner’s name.</p>
+        <div class="challenge-prompt"><strong>Complete the expression</strong><code>Hello, ${"${"}<span class="challenge-blank">name</span>{"}"}!</code><p style="margin-bottom:0">What belongs inside the braces so the greeting uses the value stored in <code>name</code>?</p></div>
+        <form class="challenge-answer" data-challenge-form>
+          <input data-challenge-answer aria-label="Your answer" placeholder="Type a variable name" autocomplete="off" required />
+          <button class="button button-dark button-small" type="submit">Check answer</button>
+        </form>
+        <div class="challenge-feedback" data-challenge-feedback role="status" hidden></div>
+        <div class="hint-actions" style="margin-top:18px"><button class="hint-button" type="button" data-challenge-hint-button>Show a hint</button><button class="hint-button" type="button" data-challenge-solution-button>Reveal explanation</button></div>
+        <div class="hint-response" data-challenge-hint hidden>Use the variable that was already given to you. Don’t type the person’s actual name.</div>
+        <div class="hint-response" data-challenge-solution hidden><strong>Answer: <code>name</code>.</strong> Template literal interpolation uses <code>${"${name}"}</code> to insert the value of the variable named <code>name</code>.</div>
+        <div style="margin-top:17px"><span class="challenge-complete" data-challenge-completed hidden>Challenge complete · saved in this browser</span></div>
+      </div>
+    </article>
+    <div class="section-heading" style="margin-top:45px"><div><span class="eyebrow">Make the idea stick</span><h2>Use it in a project next.</h2><p>Practice is a checkpoint, not the finish. Continue the web path and add a small interaction to your homepage project.</p></div><a href="/paths/build-your-first-web-app/" class="button button-outline">Open the web path</a></div>
+    <div class="detail-note"><strong>More practice is growing.</strong> This sample challenge is a working preview of the practice format. New challenges will be connected to each learning path as the curriculum expands.</div>
+  </div></section>
+  <script>import "../../scripts/practice.ts";</script>
+</SiteLayout>

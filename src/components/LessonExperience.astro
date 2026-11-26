@@ -1,0 +1,55 @@
+---
+import type { Lesson, LearningPath } from "../data/learning";
+import Breadcrumbs from "./Breadcrumbs.astro";
+
+interface Props { lesson: Lesson; path: LearningPath }
+const { lesson, path } = Astro.props;
+const index = path.lessonSlugs.indexOf(lesson.slug);
+const previous = index > 0 ? path.lessonSlugs[index - 1] : null;
+const next = index >= 0 && index < path.lessonSlugs.length - 1 ? path.lessonSlugs[index + 1] : null;
+---
+
+<div class="shell lesson-shell">
+  <div class="lesson-topline">
+    <Breadcrumbs items={[{ label: "Learning paths", href: "/paths/" }, { label: path.title, href: `/paths/${path.slug}/` }, { label: lesson.title }]} />
+    <button class="save-button" type="button" data-save-lesson={lesson.slug} aria-pressed="false">Save lesson</button>
+  </div>
+  <article class="lesson-reading" data-lesson data-lesson-slug={lesson.slug} data-answer-index={lesson.check.answer} data-answer-feedback={lesson.check.feedback}>
+    <span class="eyebrow">{path.category} <span>·</span> Lesson {String(index + 1).padStart(2, "0")}</span>
+    <h1>{lesson.title}</h1>
+    <p class="lesson-summary">{lesson.summary}</p>
+    <div class="lesson-meta"><span>{lesson.duration}</span><span>No account needed</span></div>
+    <div class="objectives-card"><strong>After this lesson, you can:</strong><ul>{lesson.objectives.map((objective) => <li><span class="check-mark" aria-hidden="true">✓</span>{objective}</li>)}</ul></div>
+    <p class="detail-note" style="margin-top:15px"><strong>Before you start:</strong> {lesson.prerequisite}</p>
+    {lesson.sections.map((section) => <section class="lesson-section"><h2>{section.heading}</h2><p>{section.body}</p></section>)}
+    {lesson.code && <div class="code-card"><div class="code-card-head"><span><span class="code-window-dot"></span>{lesson.code.label} <span class="code-language">{lesson.code.language}</span></span><button type="button" data-copy-code>Copy code</button></div><pre><code data-code-content>{lesson.code.source}</code></pre></div>}
+    <div class="callout"><strong>Try this:</strong> Predict what the example does before reading the exercise. A useful mental model makes the next step easier.</div>
+    <div class="check-card">
+      <div class="check-title">Quick check</div>
+      <h2>{lesson.check.question}</h2>
+      <div class="answer-list">
+        {lesson.check.options.map((option, answerIndex) => <button type="button" class="answer-option" data-answer-choice={answerIndex} aria-pressed="false"><span class="radio-dot">{String.fromCharCode(65 + answerIndex)}</span>{option}</button>)}
+      </div>
+      <div style="margin-top:13px"><button class="button button-dark button-small" type="button" data-check-answer disabled>Check answer</button></div>
+      <div class="feedback" data-answer-result role="status" hidden></div>
+    </div>
+    <section class="exercise-card">
+      <h2>Your turn</h2><p>{lesson.exercise.prompt}</p>
+      <div class="hint-actions">{lesson.exercise.hints.map((hint, hintIndex) => <button type="button" class="hint-button" data-show-hint={hintIndex} data-hint-text={hint}>Show hint {hintIndex + 1}</button>)}</div>
+      <div class="hint-response" data-hint-result role="status" hidden></div>
+      <button type="button" class="solution-toggle" data-toggle-solution>Reveal an example answer</button>
+      <div class="hint-response" data-solution hidden><strong>One possible answer:</strong> {lesson.exercise.solution}</div>
+    </section>
+    <div class="source-list"><strong>Keep learning:</strong>{lesson.sources.map((source) => <a href={source.url} target="_blank" rel="noreferrer">{source.label}</a>)}{lesson.lastReviewed && <span>Last reviewed {lesson.lastReviewed}</span>}</div>
+    <div class="lesson-actions">
+      {previous ? <a href={`/learn/${previous}/`} class="button button-outline">Previous lesson</a> : <a href={`/paths/${path.slug}/`} class="button button-outline">Back to path</a>}
+      <button class="button button-dark" type="button" data-complete-lesson={lesson.slug}>Mark lesson complete</button>
+      {next ? <a href={`/learn/${next}/`} class="button button-lime">Next lesson</a> : <a href={`/projects/${path.projectSlug}/`} class="button button-lime">Go to project</a>}
+    </div>
+  </article>
+</div>
+
+<script>
+  import "../scripts/lesson.ts";
+  import "../scripts/progress-ui.ts";
+</script>
