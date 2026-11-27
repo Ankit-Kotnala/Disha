@@ -8,7 +8,7 @@ const searchText = `${path.title} ${path.category} ${path.level} ${path.skills.j
 ---
 
 <article class:list={["path-card", `accent-${path.accent}`, { "path-card-compact": compact }]} data-filter-card data-search={searchText} data-level={path.level} data-status={path.status}>
-  <div class="path-card-top"><span class="path-icon" aria-hidden="true">{path.category === "Web development" ? "01" : path.category === "Python & data" ? "02" : "03"}</span><StatusBadge status={path.status} /></div>
+  <div class="path-card-top"><StatusBadge status={path.status} /></div>
   <p class="eyebrow">{path.category} <span>·</span> {path.level}</p>
   <h3><a href={`/paths/${path.slug}/`}>{path.title}</a></h3>
   <p class="path-description">{path.description}</p>
