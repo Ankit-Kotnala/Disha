@@ -11,7 +11,7 @@ const searchText = `${topic.name} ${topic.category} ${topic.description}`.toLowe
 ---
 
 <article class="topic-card" data-filter-card data-search={searchText} data-category={topic.category} data-status={topic.status}>
-  <div class="topic-card-top"><span class="topic-symbol" aria-hidden="true">✦</span><StatusBadge status={topic.status} /></div>
+  <div class="topic-card-top"><StatusBadge status={topic.status} /></div>
   <span class="eyebrow">{topic.category} <span>·</span> {topic.level}</span>
   <h3>{external ? <a href={href} target="_blank" rel="noreferrer">{topic.name}</a> : <a href={href}>{topic.name}</a>}</h3>
   <p>{topic.description}</p>
